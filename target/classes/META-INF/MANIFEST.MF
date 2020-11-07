@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: Bader
+Build-Jdk: 11.0.8
+Implementation-Title: Spring Boot Quick Start
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: springbootquickstart
+Implementation-Vendor: Pivotal Software, Inc.
+Implementation-URL: http://projects.spring.io/spring-boot/basic-api/
+Created-By: Maven Integration for Eclipse
+
