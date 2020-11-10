@@ -23,7 +23,7 @@ public class Trick {
 		this.category = category;
 	}
 	
-	public List<Trick> getAllMoves() {
+	public static List<Trick> getAllMoves() {
 		List<Trick> rv = new ArrayList<Trick>();
 		//normal kicks
 		rv.add(new Trick("Round Kick", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.normal_kicks));
@@ -36,6 +36,7 @@ public class Trick {
 		rv.add(new Trick("Backside 900", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.pop_kicks));
 		//cheat kicks
 		rv.add(new Trick("Tornado", true, false, new Stance[]{Stance.r_sideways, Stance.sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.cheat_kicks));
+		rv.add(new Trick("540", false, false, new Stance[]{Stance.r_sideways, Stance.sideways}, new Stance[]{Stance.sideways}, TrickCategory.cheat_kicks));
 		rv.add(new Trick("Cheat 720", false, false, new Stance[]{Stance.sideways, Stance.r_sideways}, new Stance[]{Stance.sideways}, TrickCategory.cheat_kicks));
 		rv.add(new Trick("Jack Knife", false, false, new Stance[]{Stance.sideways, Stance.r_sideways}, new Stance[]{Stance.sideways}, TrickCategory.cheat_kicks));
 		rv.add(new Trick("Cheat 900", false, false, new Stance[]{Stance.sideways, Stance.r_sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.cheat_kicks));
@@ -64,17 +65,17 @@ public class Trick {
 		rv.add(new Trick("Cork", true, true, new Stance[]{Stance.backwards}, new Stance[]{Stance.backwards}, TrickCategory.backward_twists));
 		rv.add(new Trick("Boxcutter", false, true, new Stance[]{Stance.backwards}, new Stance[]{Stance.sideways}, TrickCategory.backward_twists));
 		//forward_flips
-		rv.add(new Trick("Dive Roll", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.forwards, Stance.sideways, Stance.r_sideways}, TrickCategory.forward_flips));
-		rv.add(new Trick("Reversao", false, false, new Stance[]{Stance.forwards, Stance.sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.forward_flips));
+		rv.add(new Trick("Dive Roll", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.sideways, Stance.r_sideways}, TrickCategory.forward_flips));
+		rv.add(new Trick("Reversao", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.r_sideways}, TrickCategory.forward_flips));
 		rv.add(new Trick("Front Tuck", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.forwards}, TrickCategory.forward_flips));
 		rv.add(new Trick("Webster", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.forwards, Stance.r_sideways}, TrickCategory.forward_flips));
 		rv.add(new Trick("Roundoff", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.forward_flips));
 		//forward twists
 		rv.add(new Trick("360 Dive Roll", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.forwards, Stance.r_sideways}, TrickCategory.forward_twists));
-		rv.add(new Trick("A-twist", false, false, new Stance[]{Stance.forwards, Stance.sideways}, new Stance[]{Stance.backwards}, TrickCategory.forward_twists));
+		rv.add(new Trick("A-twist", false, false, new Stance[]{Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.forward_twists));
 		//outside flips
 		rv.add(new Trick("Parafuso", false, false, new Stance[]{Stance.sideways, Stance.r_sideways}, new Stance[]{Stance.backwards, Stance.sideways}, TrickCategory.outside_flips));
-		rv.add(new Trick("Dleg", false, false, new Stance[]{Stance.sideways, Stance.r_sideways}, new Stance[]{Stance.backwards, Stance.sideways}, TrickCategory.outside_flips));
+//		rv.add(new Trick("Dleg", false, false, new Stance[]{Stance.sideways, Stance.r_sideways}, new Stance[]{Stance.backwards, Stance.sideways}, TrickCategory.outside_flips));
 		rv.add(new Trick("Gumbi", true, false, new Stance[]{Stance.sideways, Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.outside_flips));
 		rv.add(new Trick("Raiz", true, false, new Stance[]{Stance.sideways, Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.outside_flips));
 		rv.add(new Trick("TDR", true, false, new Stance[]{Stance.sideways, Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.outside_flips));
@@ -87,10 +88,18 @@ public class Trick {
 		rv.add(new Trick("Cartwheel", false, false, new Stance[]{Stance.forwards, Stance.sideways}, new Stance[]{Stance.sideways, Stance.backwards}, TrickCategory.inside_tricks));
 		rv.add(new Trick("Helicoptero", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.forwards, Stance.r_sideways}, TrickCategory.inside_tricks));
 		rv.add(new Trick("Aerial", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.sideways}, TrickCategory.inside_tricks));
-		rv.add(new Trick("Scoot", false, false, new Stance[]{Stance.sideways, Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.inside_tricks));
-		rv.add(new Trick("Master Scoot", false, false, new Stance[]{Stance.sideways, Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.inside_tricks));
-		rv.add(new Trick("Grand Master Swipe", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.sideways}, TrickCategory.inside_tricks));
+		rv.add(new Trick("Scoot", true, false, new Stance[]{Stance.sideways, Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.inside_tricks));
+		rv.add(new Trick("Master Scoot", true, false, new Stance[]{Stance.sideways, Stance.forwards}, new Stance[]{Stance.backwards}, TrickCategory.inside_tricks));
+		rv.add(new Trick("Grand Master Swipe", true, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.sideways}, TrickCategory.inside_tricks));
 		
 		return rv;
+	}
+	
+	
+	public static List<Trick> setAllTricksActiveHelper(List<Trick> list) {
+		for(Trick t : list) {
+			t.isActive = true;
+		}
+		return list;
 	}
 }
