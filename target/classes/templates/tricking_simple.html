@@ -59,10 +59,45 @@
 				var n = document.getElementById('numberTricks1').value;
 				var Obj = {n: n, tricks: $scope.trickList }
 				$http.post("/tricking/CreativeGeneration", Obj).then(function(response) {
+					$scope.errorMessage = "";
 					$scope.generatedList = response.data;
 					console.log("Creative Combo Generated")
 				}, function (rejection) {
-					console.log(rejection)
+					$scope.errorMessage = rejection.data;
+					$scope.generatedList = [];
+				});
+			}
+			
+			$scope.generateStructured = function() {
+				var n = document.getElementById('numberTricks2').value;
+				var difficulty = document.getElementById('trickDifficulty').value;
+				var Obj = {n: n, tricks: $scope.trickList, difficulty: difficulty}
+				$http.post("/tricking/StructuredGeneration", Obj).then(function(response) {
+					$scope.errorMessage = "";
+					$scope.generatedList = response.data;
+				}, function (rejection) {
+					$scope.generatedList = [];
+					$scope.errorMessage = rejection.data;
+				});
+			}
+			
+			$scope.generateSpecific = function() {
+				if($scope.specificTrick == null) {
+					$scope.errorMessage = "No Trick Selected";
+					return;
+				}
+				
+				var n = document.getElementById('numberTricks3').value;
+				var specific = $scope.specificTrick.name;
+				var pos = document.getElementById('specificPos').value;
+				
+				var Obj = {n: n, tricks: $scope.trickList, specific: specific, pos: pos}
+				$http.post("/tricking/SpecificGeneration", Obj).then(function(response) {
+					$scope.errorMessage = "";
+					$scope.generatedList = response.data;
+				}, function (rejection) {
+					$scope.generatedList = [];
+					$scope.errorMessage = rejection.data;
 				});
 			}
 			
@@ -134,28 +169,36 @@
           </div>
           <a href="#" class="button-2 w-button" ng-click="generateCreative()">Generate</a>
         </div>
-        <div class="div-block-3">
+        <div class="div-block-3" style="display: none;">
           <h1 class="heading-2">Structured Mode</h1>
           <div class="html-embed w-embed"><label for="numberTricks">Number of Tricks</label>
             <input type="number" id="numberTricks2" name="numberTricks" min="1" max="100" value="3" style="margin-left: 10px;"></input>
           </div>
           <div class="html-embed-2 w-embed"><label for="numberTricks">Difficulty (0, 1, 2, or 3)</label>
-            <input type="number" id="numberTricks3" name="numberTricks" min="0" max="3" value="0" style="margin-left: 10px;"></input>
+            <input type="number" id="trickDifficulty" name="numberTricks" min="0" max="3" value="0" style="margin-left: 10px;"></input>
           </div>
-          <a href="#" class="button w-button">Generate</a>
+          *This is still in progress b/c it still sucks.
+          <a href="#" class="button w-button" ng-click="generateStructured()">Generate</a>
         </div>
         <div class="div-block-3">
           <h1 class="heading-2">Specific Mode</h1>
-          <div class="html-embed w-embed"><label for="numberTricks">Number of Tricks</label>
-            <input type="number" id="numberTricks" name="numberTricks" min="1" max="100" value="3" style="margin-left: 10px;"></input>
+          <div class="html-embed w-embed"><label for="numberTricks3">Number of Tricks</label>
+            <input type="number" id="numberTricks3" min="1" max="100" value="3" style="margin-left: 10px;"></input>
           </div>
-          <div class="html-embed-3 w-embed"><label for="trickName">Specific Trick</label>
-            <input type="text" id="trickName" name="trickName" style="width:60px; margin-left:30px;"></input>
+          <div class="html-embed-3 w-embed"><label for="numberTricks3" style="margin-right:20px;">Specific Trick</label>
+            <select ng-model="specificTrick">
+			    <option ng-repeat="trick in trickList" ng-value="trick">{{trick.name}}</option>
+			</select>
           </div>
-          <a href="#" class="button-3 w-button">Generate</a>
+          <div class="html-embed-3 w-embed"><label for="numberTricks3">Pos (1, 2, or 3)</label>
+            <input type="number" id="specificPos" min="1" max="3" value="1" style="margin-left: 10px;"></input>
+          </div>
+          <a href="#" class="button-3 w-button" ng-click="generateSpecific()">Generate</a>
         </div>
       </div>
       <div class="div-block-4" style="vertical-align: middle;">
+      	{{errorMessage}}
+      
       	<ol type="1">
 	    <li ng-repeat="trick in generatedList" >
 	        {{trick.name}}

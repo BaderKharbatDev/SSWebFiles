@@ -1,4 +1,4 @@
-package trickinggenerator.test;
+package test;
 
 import java.util.List;
 

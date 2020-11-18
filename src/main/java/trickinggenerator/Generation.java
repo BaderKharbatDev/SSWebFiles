@@ -61,7 +61,9 @@ public class Generation {
 		
 		n = n - 1;
 		Trick curr = null;
-		for(Trick t:Trick.getAllMoves()) {
+		List<Trick> allMoves = Trick.getAllMoves();
+		allMoves = Trick.setAllTricksActiveHelper(allMoves);
+		for(Trick t:allMoves) {
 			if(t.name.equalsIgnoreCase(name)) {
 				curr = t;
 				break;
@@ -70,7 +72,7 @@ public class Generation {
 		
 		//checks for valid trick
 		if(curr == null) {
-			throw new IllegalArgumentException("No Such Trick Exists");
+			throw new IllegalArgumentException("No Move Selected");
 		}
 		
 		rv.add(curr);
@@ -142,6 +144,8 @@ public class Generation {
 					weight.inc(1);
 				} else if (prev.canSwingOnLanding && !after.doesSwing) {
 					weight.inc(1);
+				} else if (!prev.canSwingOnLanding && !after.doesSwing) {
+					weight.inc(1);
 				} else if (!prev.canSwingOnLanding && after.doesSwing) {
 					weight.inc(-1);
 				}
@@ -194,6 +198,8 @@ public class Generation {
 				if(prev.canSwingOnLanding && after.doesSwing) {
 					weight.inc(1);
 				} else if (prev.canSwingOnLanding && !after.doesSwing) {
+					weight.inc(1);
+				} else if (!prev.canSwingOnLanding && !after.doesSwing) {
 					weight.inc(1);
 				} else if (!prev.canSwingOnLanding && after.doesSwing) {
 					weight.inc(-1);
@@ -262,6 +268,8 @@ public class Generation {
 				if(prev.canSwingOnLanding && after.doesSwing) {
 					weight.inc(1);
 				} else if (prev.canSwingOnLanding && !after.doesSwing) {
+					weight.inc(1);
+				} else if (!prev.canSwingOnLanding && !after.doesSwing) {
 					weight.inc(1);
 				} else if (!prev.canSwingOnLanding && after.doesSwing) {
 					weight.inc(-1);

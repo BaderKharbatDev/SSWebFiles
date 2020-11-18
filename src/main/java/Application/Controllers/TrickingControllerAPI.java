@@ -41,7 +41,7 @@ public class TrickingControllerAPI {
 	@PostMapping ( "/tricking/CreativeGeneration" )
     public ResponseEntity generateCreative(@RequestBody TrickForm trickF) {
 		if(trickF.n < 1 || trickF.n > 100) {
-			String[] str = {"Number of moves must be 0-100."};
+			String[] str = {"Number of moves must be 1-100."};
 			return new ResponseEntity( str, HttpStatus.BAD_REQUEST );
 		}
 		
@@ -49,9 +49,58 @@ public class TrickingControllerAPI {
 		for(Trick t:trickF.tricks) {
 			list.add(t);
 		}
-		List<Trick> generatedList = Generation.creativeGeneration(trickF.n, list);
+		try {
+			List<Trick> generatedList = Generation.creativeGeneration(trickF.n, list);
+			return new ResponseEntity( generatedList, HttpStatus.OK );
+		} catch (IllegalArgumentException e) {
+			String s = "Not Enough Moves Selected from the Filter Menu";
+			String[] str = {s};
+			return new ResponseEntity( str, HttpStatus.BAD_REQUEST );
+		}
+    }
+	
+	@PostMapping ( "/tricking/StructuredGeneration" )
+    public ResponseEntity generateStructured(@RequestBody TrickForm trickF) {
+		if(trickF.n < 1 || trickF.n > 100) {
+			String[] str = {"Number of moves must be 1-100."};
+			return new ResponseEntity( str, HttpStatus.BAD_REQUEST );
+		}
+		if(trickF.difficulty < 0 || trickF.difficulty > 3) {
+			String[] str = {"Difficulty must be 0,1,2, or 3."};
+			return new ResponseEntity( str, HttpStatus.BAD_REQUEST );
+		}
+		
+		List<Trick> list = new ArrayList<Trick>();
+		for(Trick t:trickF.tricks) {
+			list.add(t);
+		}
+		List<Trick> generatedList = Generation.structuredGeneration(trickF.n, trickF.difficulty, list);
 		return new ResponseEntity( generatedList, HttpStatus.OK );
     }
 	
+	@PostMapping ( "/tricking/SpecificGeneration" )
+    public ResponseEntity generateSpecific(@RequestBody TrickForm trickF) {
+		if(trickF.n < 1 || trickF.n > 100) {
+			String[] str = {"Number of moves must be 1-100."};
+			return new ResponseEntity( str, HttpStatus.BAD_REQUEST );
+		}
+		if(trickF.pos < 1 || trickF.pos > 3) {
+			String[] str = {"Number of moves must be 1-3."};
+			return new ResponseEntity( str, HttpStatus.BAD_REQUEST );
+		}
+		
+		List<Trick> list = new ArrayList<Trick>();
+		for(Trick t:trickF.tricks) {
+			list.add(t);
+		}
+		try {
+			List<Trick> generatedList = Generation.creativeSpecificGeneration(trickF.n, trickF.specific, trickF.pos, list);
+			return new ResponseEntity( generatedList, HttpStatus.OK );
+		} catch (IllegalArgumentException e) {
+			String s = "Not Enough Moves Selected from the Filter Menu";
+			String[] str = {s};
+			return new ResponseEntity( str, HttpStatus.BAD_REQUEST );
+		}
+    }
 	
 }

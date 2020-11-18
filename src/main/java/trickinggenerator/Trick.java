@@ -63,8 +63,8 @@ public class Trick {
 		rv.add(new Trick("Round Kick", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.normal_kicks, 0));
 		rv.add(new Trick("Hook Kick", false, false, new Stance[]{Stance.r_sideways}, new Stance[]{Stance.sideways}, TrickCategory.normal_kicks, 0));
 		rv.add(new Trick("Frontsweep", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.normal_kicks, 0));
-		rv.add(new Trick("Backsweep", false, false, new Stance[]{Stance.r_sideways}, new Stance[]{Stance.sideways}, TrickCategory.normal_kicks, 0));
-		rv.add(new Trick("Touch Down Round", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.backwards}, TrickCategory.normal_kicks, 0));
+		rv.add(new Trick("Backsweep", false, false, new Stance[]{Stance.r_sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.normal_kicks, 0));
+		rv.add(new Trick("Touch Down Round", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.backwards, Stance.sideways}, TrickCategory.normal_kicks, 0));
 		//pop kicks
 		rv.add(new Trick("Pop 360", false, false, new Stance[]{Stance.r_sideways, Stance.forwards}, new Stance[]{Stance.r_sideways}, TrickCategory.pop_kicks, 0));
 		rv.add(new Trick("Backside 900", false, false, new Stance[]{Stance.sideways}, new Stance[]{Stance.r_sideways}, TrickCategory.pop_kicks, 0));
