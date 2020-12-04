@@ -1,128 +1,160 @@
-<!--  Last Published: Thu Nov 12 2020 18:26:36 GMT+0000 (Coordinated Universal Time)  -->
-<html data-wf-page="5fac36173363dbf55d50df9f" data-wf-site="5fac36173363db26d850df9e" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html><!--  This site was created in Webflow. http://www.webflow.com  -->
+<!--  Last Published: Fri Dec 04 2020 16:41:54 GMT+0000 (Coordinated Universal Time)  -->
+<html data-wf-page="5fb9b6355fb8452f63e7f05a" data-wf-site="5fb6ce9ec73948818e5634cb">
 <head>
-  <meta charset="utf-8"></meta>
-  <title>Sun-Strider</title>
-  <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
-  <meta content="Webflow" name="generator"></meta>
-  <link href="css/normalize.css" rel="stylesheet" type="text/css"></link>
-  <link href="css/webflow.css" rel="stylesheet" type="text/css"></link>
-  <link href="css/sun-strider.webflow.css" rel="stylesheet" type="text/css"></link>
-  <!--<script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&amp;&amp;c instanceof DocumentTouch)&amp;&amp;(n.className+=t+"touch")}(window,document);</script>
-  -->
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"></link>
-  <link href="images/webclip.png" rel="apple-touch-icon"></link>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-  <script th::inline="javascript">
-  /*<![CDATA[*/
-		var app = angular.module("trickingApp", []);
-		app.controller("trickingAppCtrl", function($scope, $http) {
-
-			$scope.trickList = [];
-			
-			$scope.loadList = function() {
-				$scope.error = "";
-				$http.get("/OrderedTricks").then(function(response) {
-					console.log(response.data)
-					$scope.trickList = response.data;
-				}, function (rejection) {
-					console.log("Couldn't retreive data")
-				});					
-			}
-			$scope.loadList();
-		});
-	/*]]>*/
-	</script>
-
+  <meta charset="utf-8">
+  <title>Tricking Generator</title>
+  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." name="description">
+  <meta content="Tricking Generator" property="og:title">
+  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." property="og:description">
+  <meta content="Tricking Generator" property="twitter:title">
+  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." property="twitter:description">
+  <meta property="og:type" content="website">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/baders-radical-project.webflow.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Vollkorn:400,400italic,700,700italic","Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
+  <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="images/webclip.png" rel="apple-touch-icon">
 </head>
-<body>
-
-  <div class="section" ng-app="trickingApp" ng-controller="trickingAppCtrl"><img src="images/templogo.png" loading="lazy" srcset="images/templogo.png 500w, images/templogo.png 800w, images/templogo.png 1000w" sizes="120px" alt="" class="image"></img>
-    <div class="div-block">
-      <div class="div-block-3">
-        <h1 class="heading-3">SUN STRIDER</h1>
+<body class="body">
+  <div data-collapse="medium" data-animation="default" data-duration="400" role="banner" class="navbar-2 w-nav">
+    <div class="container-2 w-container">
+      <a href="index.html" class="w-nav-brand"><img src="images/DragoBWFinal.png" loading="lazy" sizes="(max-width: 479px) 17vw, (max-width: 767px) 20vw, 150px" srcset="images/DragoBWFinal-p-500.png 500w, images/DragoBWFinal-p-800.png 800w, images/DragoBWFinal-p-1080.png 1080w, images/DragoBWFinal-p-1600.png 1600w, images/DragoBWFinal-p-2000.png 2000w, images/DragoBWFinal-p-2600.png 2600w, images/DragoBWFinal-p-3200.png 3200w, images/DragoBWFinal.png 4500w" alt="" class="image-2"></a>
+      <div class="div-block">
+        <h1 class="heading">SUNSTRIDER</h1>
       </div>
+      <div class="menu-button-2 w-nav-button">
+        <div class="w-icon-nav-menu"></div>
+      </div>
+      <div class="div-block-2">
+        <nav role="navigation" class="nav-menu-2 w-nav-menu">
+          <a href="index.html" class="nav-link w-nav-link">Home</a>
+          <a href="applications.html" class="nav-link w-nav-link">Applications</a>
+          <a href="contact.html" class="nav-link-3 w-nav-link">Contact Us</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <div class="section-5">
+    <div class="div-block-8">
       <div class="div-block-9">
-        <h3 class="heading-2">The Tricking Grimoire</h3>
-        <h4 class="heading">A Tricking Generation Tool For Fun</h4>
+        <div class="div-block-16">
+          <h1 class="heading-7">Filter Tricks</h1>
+        </div>
+        <div class="div-block-13"></div>
       </div>
-      <div class="div-block-6">
-        <div class="div-block-7">
-          <h2 class="heading-4">Filter Tricks</h2>
-          <div class="div-block-12">
-            <div class="html-embed-2 w-embed"><label>
-                Basic Kicks
-                <input type="checkbox" name="" value=""></input>
-              </label></div>
-            <div class="html-embed-3 w-embed">
-           		<label ng-repeat="trick in trickList">
-                	<input type="checkbox" ng-checked="trick.isActive" value=""></input> {{trick.name}}
-              	</label>
+      <div class="div-block-10">
+        <div class="div-block-17"><img src="images/Flamebook2.png" loading="lazy" sizes="(max-width: 479px) 75px, (max-width: 991px) 100px, 122.515625px" srcset="images/Flamebook2.png 500w, images/Flamebook2.png 800w, images/Flamebook2.png 1080w, images/Flamebook2.png 1600w, images/Flamebook2.png 1985w" alt="" class="image-7">
+          <div class="div-block-42">
+            <h1 class="heading-7-copy">The Tricking Grimoire<br></h1>
+            <p class="paragraph-4">A tricking combination generator that allows you to choose the tricks you want to practice but in a randomly generated order!</p>
+          </div>
+        </div>
+        <div class="tricking-menu">
+          <div class="div-block-19-copy">
+            <div class="div-block-22">
+              <h3 class="heading-8-copy">Filter Tricks</h3>
+              <p class="paragraph-copy">Filter out tricks that you may not want showing up when generating a tricking combination.</p>
+            </div>
+          </div>
+          <div class="div-block-19">
+            <div class="div-block-22">
+              <h3 class="heading-8">Creative Mode</h3>
+              <p class="paragraph">Creates a tricking combo by matching tricks that have the same starting and ending stances.</p>
+            </div>
+          </div>
+          <div class="div-block-19">
+            <div class="div-block-23">
+              <h3 class="heading-8">Specific Mode</h3>
+              <p class="paragraph-2">Builds a tricking combo around a specific trick. This trick can be placed at the beginning, middle, or end of the tricking combo.</p>
+            </div>
+          </div>
+          <div class="div-block-19">
+            <div class="div-block-24">
+              <h3 class="heading-8">Structured Mode</h3>
+              <p class="paragraph-3">Builds a tricking combo that will always end with a finishing trick depending on the difficulty level chosen.</p>
             </div>
           </div>
         </div>
-        <div class="div-block-8">
-          <div data-duration-in="300" data-duration-out="100" class="w-tabs">
-            <div class="tabs-menu w-tab-menu">
-              <a data-w-tab="Tab 1" class="w-inline-block w-tab-link w--current">
-                <div class="text-block-2">Creative Mode</div>
-              </a>
-              <a data-w-tab="Tab 2" class="w-inline-block w-tab-link">
-                <div class="text-block-3">Structured Mode</div>
-              </a>
-              <a data-w-tab="Tab 3" class="w-inline-block w-tab-link">
-                <div class="text-block-4">Specific Trick Mode</div>
-              </a>
+        <div class="creative">
+          <div class="div-block-28">
+            <h1 class="heading-10">Creative Mode</h1>
+            <div class="div-block-33">
+              <h3 class="heading-10">Trick Count</h3>
+              <h1 class="heading-11">---------</h1>
             </div>
-            <div class="tabs-content w-tab-content">
-              <div data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane w--tab-active">
-                <p class="paragraph">This mode will generate a Tricking combo pass by looking purely at stance position. I.e. It may generate some combinations where your momentum may feel unnatural, however on the other hand it may also generate combinations that you may not have thought of... </p>
-                <div class="div-block-10">
-                  <div class="html-embed w-embed"><label for="numberTricks">Number of Tricks</label>
-                    <input type="number" id="numberTricks" name="numberTricks" min="1" max="100" value="3" style="margin-left: 10px;"></input>
-                  </div>
-                  <a href="#" class="button w-button">Generate</a>
-                </div>
-              </div>
-              <div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane">
-                <p class="paragraph">This mode will let you specify the level of difficulty of the combos you&#x27;d like, and it always ends with a finishing trick i.e. twist or flip.</p>
-                <div class="div-block-10">
-                  <div class="html-embed w-embed"><label for="numberTricks">Number of Tricks</label>
-                    <input type="number" id="numberTricks" name="numberTricks" min="1" max="100" value="3" style="margin-left: 10px;"></input>
-                  </div>
-                  <div class="html-embed w-embed"><label for="numberTricks">Difficulty (0, 1, 2, or 3)</label>
-                    <input type="number" id="numberTricks" name="numberTricks" min="0" max="3" value="0" style="margin-left: 10px;"></input>
-                  </div>
-                  <a href="#" class="button w-button">Generate</a>
-                </div>
-              </div>
-              <div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane">
-                <p class="paragraph">Select a Trick you may want to drill and then select where you want that trick in the combo i.e. beginning, in the middle, or at the end of the combo. See what it gives you?</p>
-                <div class="div-block-10">
-                  <div class="html-embed w-embed"><label for="numberTricks">Number of Tricks</label>
-                    <input type="number" id="numberTricks" name="numberTricks" min="1" max="100" value="3" style="margin-left: 10px;"></input>
-                  </div>
-                  <div class="html-embed w-embed"><label for="trickName">Specific Trick</label>
-                    <input type="text" id="trickName" name="trickName" style="width:60px; margin-left:30px;"></input>
-                  </div>
-                  <a href="#" class="button w-button">Generate</a>
-                </div>
-              </div>
+            <div class="div-block-35">
+              <a href="#" class="button-4 w-button">Back</a>
+              <a href="#" class="button-3 w-button">Generate</a>
             </div>
           </div>
-          <div class="div-block-11">
-            <ul role="list" class="w-list-unstyled">
-              <li class="list-item">
-                <h3 class="heading-5">Trick #1</h3><img src="images/templogo.png" loading="lazy" srcset="images/templogo.png 500w, images/templogo.png 800w, images/templogo.png 1000w" sizes="50px" alt="" class="image-2"></img>
-              </li>
-            </ul>
+          <div class="div-block-29"></div>
+        </div>
+        <div class="specific">
+          <div class="div-block-28">
+            <h1 class="heading-10-copy">Specific Mode</h1>
+            <div class="div-block-29">
+              <div class="div-block-33">
+                <h3 class="heading-10">Trick Count</h3>
+                <h1 class="heading-11">---------</h1>
+              </div>
+              <div class="div-block-33">
+                <h3 class="heading-10">Specific Trick</h3>
+                <h1 class="heading-11">---------</h1>
+              </div>
+              <div class="div-block-33">
+                <h3 class="heading-10">Position</h3>
+                <h1 class="heading-11">---------</h1>
+              </div>
+            </div>
+            <div class="div-block-35">
+              <a href="#" class="button-4 w-button">Back</a>
+              <a href="#" class="button-3 w-button">Generate</a>
+            </div>
           </div>
+          <div class="div-block-34"></div>
+        </div>
+        <div class="structered">
+          <div class="div-block-28">
+            <h1 class="heading-10-copy">Specific Mode</h1>
+            <div class="div-block-29">
+              <div class="div-block-33">
+                <h3 class="heading-10">Trick Count</h3>
+                <h1 class="heading-11">---------</h1>
+              </div>
+              <div class="div-block-33">
+                <h3 class="heading-10-copy-copy">Difficulty</h3>
+                <h1 class="heading-11">---------</h1>
+              </div>
+            </div>
+            <div class="div-block-35">
+              <a href="#" class="button-4 w-button">Back</a>
+              <a href="#" class="button-3 w-button">Generate</a>
+            </div>
+          </div>
+          <div class="div-block-34"></div>
+        </div>
+        <div class="filter">
+          <div class="div-block-16">
+            <h1 class="heading-7">Filter Tricks</h1>
+            <div class="div-block-36">
+              <a href="#" class="button-5 w-button">Back</a>
+              <p class="paragraph-5">Filter any tricks you don&#x27;t want showing up in combos.</p>
+            </div>
+          </div>
+          <div class="div-block-37"></div>
         </div>
       </div>
     </div>
   </div>
-  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=5fac36173363db26d850df9e" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=5fb6ce9ec73948818e5634cb" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
   <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
 </body>

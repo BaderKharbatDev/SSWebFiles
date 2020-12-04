@@ -29,13 +29,35 @@ public class MapController implements ErrorController{
         return PATH;
     }
 	
-    @GetMapping({"", "/", "/main"})
+    @GetMapping({"", "/", "/home", "/index"})
 	public String getMain() {
-		return "main";
+		return "index";
 	}
 	
     @GetMapping({"/tricking"})
 	public String getTrickingGen() {
+		return "tricking";
+	}
+    
+    @GetMapping({"/applications"})
+	public String getApplications() {
+		return "applications";
+	}
+    
+    @GetMapping({"/contact"})
+	public String getContactPage() {
+		return "contact";
+	}
+    
+    @GetMapping({"/kickbotic"})
+	public String getKickboticPage() {
+		return "kickbotic";
+	}
+    
+    //--------------------------
+    
+    @GetMapping({"/old-tricking"})
+	public String getTrickingOldGen() {
 		return "tricking_simple";
 	}
 
