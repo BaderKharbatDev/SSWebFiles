@@ -23,8 +23,79 @@
   -->
   <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"></link>
   <link href="images/webclip.png" rel="apple-touch-icon"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script th::inline="javascript">
+  /*<![CDATA[*/
+		var app = angular.module("kickboticApp", []);
+		app.controller("kickboticCtrl", function($scope, $http) {
+			
+		function togglehide(divId) {
+		  var x = document.getElementById(divId);
+		  if (x.style.display === "none") {
+		    x.style.display = "flex";
+		  } else {
+		    x.style.display = "none";
+		  }
+		}
+		
+		$scope.incdecNormal = function(val) {
+			if( ($scope.normalCount + val) >= 1 && ($scope.normalCount + val) <= 20 ) {
+				$scope.normalCount += val;
+			}
+		}
+		
+		$scope.incdecCallOut = function(val) {
+			if( ($scope.calloutCount + val) >= 1 && ($scope.calloutCount + val) <= 20 ) {
+				$scope.calloutCount += val;
+			}
+		}
+		
+		$scope.showResults = function() {
+			  var x = document.getElementById(generateDisplay);
+			  var y = document.getElementById(filterDisplay);
+			  x.style.display = "flex";
+			  y.style.display = "none";
+		}
+		
+		$scope.showFilter = function() {
+			var x = document.getElementById(generateDisplay);
+			  var y = document.getElementById(filterDisplay);
+			  x.style.display = "none";
+			  y.style.display = "flex";
+		}
+		
+		var calloutDivId = "calloutDiv";
+		var timerDivId = "timerDiv";
+		var normalIncMinus = "normalMinus";
+		var normalIncPlus = "normalPlus";
+		var normalText = "normalCount";
+		var callOutSlider = "myRange";
+		var callOutSliderText = "calloutCount";
+		var callOutIncPlus =  "calloutPlus";
+		var callOutIncMinus = "calloutMinus";
+		var callOutText = "calloutText";
+		var timerText = "timerText";
+		var normalButton = "normalButton";
+		var callOutButton = "calloutButton";
+		var timerButton ="timerButton";
+		var filterDisplay = "filtermenu";
+		var generateDisplay = "results"; 
+		
+		togglehide(timerDivId);
+		togglehide(filterDisplay);
+		
+		$scope.normalCount = 3;
+		$scope.calloutCount = 3;
+		
+		
+		
+			
+		});
+	/*]]>*/
+	</script>
 </head>
-<body class="body-4">
+<body class="body-4" ng-app="kickboticApp" ng-controller="kickboticCtrl">
   <div data-collapse="medium" data-animation="default" data-duration="400" role="banner" class="navbar-2 w-nav">
     <div class="container-2 w-container">
       <a href="index.html" class="w-nav-brand"><img src="images/DragoBWFinal.png" loading="lazy" sizes="(max-width: 479px) 100vw, (max-width: 767px) 20vw, 150px" srcset="images/DragoBWFinal-p-500.png 500w, images/DragoBWFinal-p-800.png 800w, images/DragoBWFinal-p-1080.png 1080w, images/DragoBWFinal-p-1600.png 1600w, images/DragoBWFinal-p-2000.png 2000w, images/DragoBWFinal-p-2600.png 2600w, images/DragoBWFinal-p-3200.png 3200w, images/DragoBWFinal.png 4500w" alt="" class="image-2"></img></a>
@@ -48,13 +119,13 @@
       <div class="div-block-49">
         <div data-duration-in="300" data-duration-out="100" class="w-tabs">
           <div class="tabs-menu w-tab-menu">
-            <a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link">
+            <a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link" ng-click="showResults()">
               <div class="text-block">Normal Mode</div>
             </a>
-            <a data-w-tab="Tab 2" class="tab-link-tab-2 w-inline-block w-tab-link w--current">
+            <a data-w-tab="Tab 2" class="tab-link-tab-2 w-inline-block w-tab-link w--current" ng-click="showResults()">
               <div class="text-block-2">Call Out Mode</div>
             </a>
-            <a data-w-tab="Tab 3" class="tab-link-tab-3 w-inline-block w-tab-link">
+            <a data-w-tab="Tab 3" class="tab-link-tab-3 w-inline-block w-tab-link" ng-click="showFilter()">
               <div class="text-block-3">Filter Strikes</div>
             </a>
           </div>
@@ -63,37 +134,37 @@
               <div class="div-block-51">
                 <div class="div-block-52">
                   <div class="div-block-53">
-                    <div class="div-block-54"><img src="images/icons8-minus-24.png" loading="lazy" alt="" class="image-11"></img></div>
-                    <div class="div-block-55"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
+                    <div class="div-block-54" id="normalMinus" ng-click="incdecNormal(-1)"><img src="images/icons8-minus-24.png" loading="lazy" alt="" class="image-11"></img></div>
+                    <div class="div-block-55" id="normalPlus" ng-click="incdecNormal(1)"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
                   </div>
                   <h3 class="heading-17-copy">Number of Strikes</h3>
-                  <h2 class="heading-18">3</h2>
+                  <h2 class="heading-18" id="normalCount">{{normalCount}}</h2>
                 </div>
-                <a href="#" class="button-8 w-button">Generate</a>
+                <a href="#" class="button-8 w-button" id="normalButton">Generate</a>
               </div>
             </div>
             <div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane w--tab-active">
-              <div class="callout">
+              <div class="callout" id="calloutDiv">
                 <div class="div-block-50">
                   <h3 class="heading-19">Delay Between Combos</h3>
                 </div>
                 <div class="div-block-58">
-                  <div class="w-embed"><input type="range" min="1" max="30" value="3" class="slider" id="myRange"></input></div>
-                  <h3 class="heading-21">3 sec</h3>
+                  <div class="w-embed"><input type="range" min="1" max="30" value="3" class="slider" id="myRange" ng-model="slider"></input></div>
+                  <h3 class="heading-21" id="calloutCount">{{slider}} sec</h3>
                 </div>
                 <div class="div-block-52-copy">
                   <h3 class="heading-17">Number of Strikes</h3>
-                  <h2 class="heading-18">3</h2>
+                  <h2 class="heading-18">{{calloutCount}}</h2>
                   <div class="div-block-53-copy">
-                    <div class="div-block-54"><img src="images/icons8-minus-24.png" loading="lazy" alt="" class="image-11"></img></div>
-                    <div class="div-block-55"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
+                    <div class="div-block-54" id="calloutMinus" ng-click="incdecCallOut(-1)"><img src="images/icons8-minus-24.png" loading="lazy" alt="" class="image-11"></img></div>
+                    <div class="div-block-55" id="calloutPlus" ng-click="incdecCallOut(1)"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
                   </div>
                 </div>
-                <a href="#" class="button-8 w-button">START</a>
+                <a href="#" class="button-8 w-button" id="calloutButton">START</a>
               </div>
-              <div class="timer">
-                <h1 class="heading-23">00:00</h1>
-                <a href="#" class="button-12 w-button">STOP</a>
+              <div class="timer" id="timerDiv">
+                <h1 class="heading-23" id="timerText">00:00</h1>
+                <a href="#" class="button-12 w-button" id="timerButton">STOP</a>
               </div>
             </div>
             <div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane">
@@ -103,8 +174,8 @@
             </div>
           </div>
         </div>
-        <div class="results"></div>
-        <div class="filtermenu"></div>
+        <div class="results" id="results">results</div>
+        <div class="filtermenu" id="filtermenu">filter</div>
       </div>
     </div>
   </div>
