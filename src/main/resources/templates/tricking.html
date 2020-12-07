@@ -195,16 +195,19 @@
       </div>
     </div>
   </div>
-  <div class="section-5">
-    <div class="div-block-8">
-      <div class="div-block-9" style="height:600px;"> 
+  <div class="section-5" >
+    <div class="div-block-8" style="height: 100%;">
+      <div class="div-block-9" style="height: 100%;"> 
         <div class="div-block-16">
           <h1 class="heading-7">Filter Tricks</h1>
         </div>
-        <div class="div-block-13" style="overflow-y: scroll;">
+        <div class="div-block-13" style="height: 100%; overflow-y: scroll;">
         	<div ng-repeat="cats in category">
-	          {{cats.name}}
-	          <input type="checkbox" ng-click="changeCat(cats)" ng-model="cats.isPressed"></input>
+        	  <div style="display:flex; margin-bottom: -5px; margin-top:10px;">
+        	  	<p style="text-transform: capitalize; margin-right: 5px;">{{cats.name}}</p>
+	          	<input type="checkbox" ng-click="changeCat(cats)" ng-model="cats.isPressed"></input>
+        	  </div>
+        	  
 	          <div class="html-embed-5 w-embed" ng-repeat="trick in cats.tricks" style="margin-left:10px;">
 	        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="trick.isActive"></input> {{trick.name}}
 	          </div>
