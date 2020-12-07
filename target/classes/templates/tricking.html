@@ -2,31 +2,184 @@
 <!--  Last Published: Fri Dec 04 2020 16:41:54 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="5fb9b6355fb8452f63e7f05a" data-wf-site="5fb6ce9ec73948818e5634cb">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"></meta>
   <title>Tricking Generator</title>
-  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." name="description">
-  <meta content="Tricking Generator" property="og:title">
-  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." property="og:description">
-  <meta content="Tricking Generator" property="twitter:title">
-  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." property="twitter:description">
-  <meta property="og:type" content="website">
-  <meta content="summary_large_image" name="twitter:card">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  <meta content="Webflow" name="generator">
-  <link href="css/normalize.css" rel="stylesheet" type="text/css">
-  <link href="css/webflow.css" rel="stylesheet" type="text/css">
-  <link href="css/baders-radical-project.webflow.css" rel="stylesheet" type="text/css">
+  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." name="description"></meta>
+  <meta content="Tricking Generator" property="og:title"></meta>
+  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." property="og:description"></meta>
+  <meta content="Tricking Generator" property="twitter:title"></meta>
+  <meta content="The Tricking Grimoire - A tricking combination generator a creative, structured, and specific mode with a filter so you can practice the tricks you want." property="twitter:description"></meta>
+  <meta property="og:type" content="website"></meta>
+  <meta content="summary_large_image" name="twitter:card"></meta>
+  <meta content="width=device-width, initial-scale=1" name="viewport"></meta>
+  <meta content="Webflow" name="generator"></meta>
+  <link href="css/normalize.css" rel="stylesheet" type="text/css"></link>
+  <link href="css/webflow.css" rel="stylesheet" type="text/css"></link>
+  <link href="css/baders-radical-project.webflow.css" rel="stylesheet" type="text/css"></link>
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
   <script type="text/javascript">WebFont.load({  google: {    families: ["Vollkorn:400,400italic,700,700italic","Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic","Exo:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
   <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
-  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
-  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
-  <link href="images/webclip.png" rel="apple-touch-icon">
+  <!-- <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  -->
+  <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon"></link>
+  <link href="images/webclip.png" rel="apple-touch-icon"></link>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script th::inline="javascript">
+  /*<![CDATA[*/
+		var app = angular.module("trickingApp", []);
+		app.controller("trickingCtrl", function($scope, $http) {
+			$scope.menuDiv = "trickingMenu";
+			$scope.creativeMode = "creativeMode";
+			$scope.specificMode = "specificMode";
+			$scope.structuredMode = "structuredMode";
+			$scope.filterMode = "filterMode";
+			
+			function toggleHideDiv(divId) {
+				var x = document.getElementById(divId);
+				  if (x.style.display === "none") {
+				    x.style.display = "flex";
+				  } else {
+				    x.style.display = "none";
+				  }
+			}
+			
+			$scope.toggleMode = function(modeId) {
+				console.log("clicked");
+				toggleHideDiv($scope.menuDiv);
+				toggleHideDiv(modeId);
+			}
+			
+			toggleHideDiv($scope.creativeMode);
+			toggleHideDiv($scope.specificMode);
+			toggleHideDiv($scope.structuredMode);
+			toggleHideDiv($scope.filterMode);
+		
+			$scope.trickList = [];
+			$scope.category = [];
+			$scope.generatedList = [];
+			
+			$scope.loadList = function() {
+				$scope.error = "";
+				$http.get("/tricking/OrderedTricks").then(function(response) {
+					console.log(response.data)
+					$scope.trickList = response.data;
+					
+					$http.get("/tricking/Categories").then(function(response) {
+						var cats = response.data;
+						for(var i = 0; i < cats.length; i++) {
+							var obj = {};
+							obj.name = cats[i];
+							obj.tricks = [];
+							obj.isPressed = false;
+							for(var t = 0; t < $scope.trickList.length; t++) {
+								if($scope.trickList[t].category == obj.name) {
+									obj.tricks.push($scope.trickList[t]);
+								} 
+							}
+							$scope.category.push(obj);
+						}
+					}, function (rejection) {
+						console.log("Couldn't retreive category data")
+					});
+					
+				}, function (rejection) {
+					console.log("Couldn't retreive data")
+				});					
+			}
+			$scope.loadList();
+			
+			$scope.generateCreative = function() {
+				var n = document.getElementById('numberTricks1').value;
+				var Obj = {n: n, tricks: $scope.trickList }
+				$http.post("/tricking/CreativeGeneration", Obj).then(function(response) {
+					$scope.errorMessage = "";
+					$scope.generatedList = response.data;
+					console.log("Creative Combo Generated")
+				}, function (rejection) {
+					$scope.errorMessage = rejection.data;
+					$scope.generatedList = [];
+				});
+			}
+			
+			$scope.generateStructured = function() {
+				var n = document.getElementById('numberTricks2').value;
+				var difficulty = document.getElementById('trickDifficulty').value;
+				var Obj = {n: n, tricks: $scope.trickList, difficulty: difficulty}
+				$http.post("/tricking/StructuredGeneration", Obj).then(function(response) {
+					$scope.errorMessage = "";
+					$scope.generatedList = response.data;
+				}, function (rejection) {
+					$scope.generatedList = [];
+					$scope.errorMessage = rejection.data;
+				});
+			}
+			
+			$scope.generateSpecific = function() {
+				if($scope.specificTrick == null) {
+					$scope.errorMessage = "No Trick Selected";
+					return;
+				}
+				
+				var n = document.getElementById('numberTricks3').value;
+				var specific = $scope.specificTrick.name;
+				var pos = document.getElementById('specificPos').value;
+				
+				var Obj = {n: n, tricks: $scope.trickList, specific: specific, pos: pos}
+				$http.post("/tricking/SpecificGeneration", Obj).then(function(response) {
+					$scope.errorMessage = "";
+					$scope.generatedList = response.data;
+				}, function (rejection) {
+					$scope.generatedList = [];
+					$scope.errorMessage = rejection.data;
+				});
+			}
+			
+			//changes header cat checkbox
+			$scope.changeCat = function(cats) {
+				if(cats.isPressed) {
+					for(var i = 0; i < cats.tricks.length; i++) {
+						cats.tricks[i].isActive = true;
+					}
+				} else {
+					for(var i = 0; i < cats.tricks.length; i++) {
+						cats.tricks[i].isActive = false;
+					}
+				}
+			}
+			
+			//changes header cat checkbox on children change
+			$scope.checkCatCheckbox = function(cats) {
+				var allChecked = true;
+				var allEmpty = true;
+				for(var i = 0; i < cats.tricks.length; i++) {
+					if(!cats.tricks[i].isActive) {
+						allChecked = false;
+					}
+					if(cats.tricks[i].isActive) {
+						allEmpty = false;
+					}
+				}
+				
+				if(allChecked == true) {
+					cats.isPressed = true;
+				}
+				else if(allEmpty == true) {
+					cats.isPressed = false;
+				}
+				else {
+					cats.isPressed = false;
+				}
+				
+			}
+		});
+	/*]]>*/
+	</script>
 </head>
-<body class="body">
+<body class="body" ng-app="trickingApp" ng-controller="trickingCtrl">
   <div data-collapse="medium" data-animation="default" data-duration="400" role="banner" class="navbar-2 w-nav">
     <div class="container-2 w-container">
-      <a href="index.html" class="w-nav-brand"><img src="images/DragoBWFinal.png" loading="lazy" sizes="(max-width: 479px) 17vw, (max-width: 767px) 20vw, 150px" srcset="images/DragoBWFinal-p-500.png 500w, images/DragoBWFinal-p-800.png 800w, images/DragoBWFinal-p-1080.png 1080w, images/DragoBWFinal-p-1600.png 1600w, images/DragoBWFinal-p-2000.png 2000w, images/DragoBWFinal-p-2600.png 2600w, images/DragoBWFinal-p-3200.png 3200w, images/DragoBWFinal.png 4500w" alt="" class="image-2"></a>
+      <a href="index.html" class="w-nav-brand"><img src="images/DragoBWFinal.png" loading="lazy" sizes="(max-width: 479px) 17vw, (max-width: 767px) 20vw, 150px" srcset="images/DragoBWFinal-p-500.png 500w, images/DragoBWFinal-p-800.png 800w, images/DragoBWFinal-p-1080.png 1080w, images/DragoBWFinal-p-1600.png 1600w, images/DragoBWFinal-p-2000.png 2000w, images/DragoBWFinal-p-2600.png 2600w, images/DragoBWFinal-p-3200.png 3200w, images/DragoBWFinal.png 4500w" alt="" class="image-2"></img></a>
       <div class="div-block">
         <h1 class="heading">SUNSTRIDER</h1>
       </div>
@@ -44,46 +197,55 @@
   </div>
   <div class="section-5">
     <div class="div-block-8">
-      <div class="div-block-9">
+      <div class="div-block-9" style="height:600px;"> 
         <div class="div-block-16">
           <h1 class="heading-7">Filter Tricks</h1>
         </div>
-        <div class="div-block-13"></div>
+        <div class="div-block-13" style="overflow-y: scroll;">
+        	<div ng-repeat="cats in category">
+	          {{cats.name}}
+	          <input type="checkbox" ng-click="changeCat(cats)" ng-model="cats.isPressed"></input>
+	          <div class="html-embed-5 w-embed" ng-repeat="trick in cats.tricks" style="margin-left:10px;">
+	        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="trick.isActive"></input> {{trick.name}}
+	          </div>
+	        </div> 
+	        
+        </div>
       </div>
       <div class="div-block-10">
-        <div class="div-block-17"><img src="images/Flamebook2.png" loading="lazy" sizes="(max-width: 479px) 75px, (max-width: 991px) 100px, 122.515625px" srcset="images/Flamebook2.png 500w, images/Flamebook2.png 800w, images/Flamebook2.png 1080w, images/Flamebook2.png 1600w, images/Flamebook2.png 1985w" alt="" class="image-7">
+        <div class="div-block-17"><img src="images/Flamebook2.png" loading="lazy" sizes="(max-width: 479px) 75px, (max-width: 991px) 100px, 122.515625px" srcset="images/Flamebook2.png 500w, images/Flamebook2.png 800w, images/Flamebook2.png 1080w, images/Flamebook2.png 1600w, images/Flamebook2.png 1985w" alt="" class="image-7"></img>
           <div class="div-block-42">
-            <h1 class="heading-7-copy">The Tricking Grimoire<br></h1>
+            <h1 class="heading-7-copy">The Tricking Grimoire<br></br></h1>
             <p class="paragraph-4">A tricking combination generator that allows you to choose the tricks you want to practice but in a randomly generated order!</p>
           </div>
         </div>
-        <div class="tricking-menu">
-          <div class="div-block-19-copy">
+        <div class="tricking-menu" id="trickingMenu">
+          <div class="div-block-19-copy" ng-click="toggleMode(filterMode)">
             <div class="div-block-22">
               <h3 class="heading-8-copy">Filter Tricks</h3>
               <p class="paragraph-copy">Filter out tricks that you may not want showing up when generating a tricking combination.</p>
             </div>
           </div>
-          <div class="div-block-19">
+          <div class="div-block-19" ng-click="toggleMode(creativeMode)">
             <div class="div-block-22">
               <h3 class="heading-8">Creative Mode</h3>
               <p class="paragraph">Creates a tricking combo by matching tricks that have the same starting and ending stances.</p>
             </div>
           </div>
-          <div class="div-block-19">
+          <div class="div-block-19" ng-click="toggleMode(specificMode)">
             <div class="div-block-23">
               <h3 class="heading-8">Specific Mode</h3>
               <p class="paragraph-2">Builds a tricking combo around a specific trick. This trick can be placed at the beginning, middle, or end of the tricking combo.</p>
             </div>
           </div>
-          <div class="div-block-19">
+          <div class="div-block-19" ng-click="toggleMode(structuredMode)">
             <div class="div-block-24">
               <h3 class="heading-8">Structured Mode</h3>
               <p class="paragraph-3">Builds a tricking combo that will always end with a finishing trick depending on the difficulty level chosen.</p>
             </div>
           </div>
         </div>
-        <div class="creative">
+        <div class="creative" id="creativeMode">
           <div class="div-block-28">
             <h1 class="heading-10">Creative Mode</h1>
             <div class="div-block-33">
@@ -91,13 +253,13 @@
               <h1 class="heading-11">---------</h1>
             </div>
             <div class="div-block-35">
-              <a href="#" class="button-4 w-button">Back</a>
+              <a href="#" class="button-4 w-button" ng-click="toggleMode(creativeMode)">Back</a>
               <a href="#" class="button-3 w-button">Generate</a>
             </div>
           </div>
-          <div class="div-block-29"></div>
+          <div class="div-block-34">creative</div>
         </div>
-        <div class="specific">
+        <div class="specific" id="specificMode">
           <div class="div-block-28">
             <h1 class="heading-10-copy">Specific Mode</h1>
             <div class="div-block-29">
@@ -115,15 +277,15 @@
               </div>
             </div>
             <div class="div-block-35">
-              <a href="#" class="button-4 w-button">Back</a>
+              <a href="#" class="button-4 w-button" ng-click="toggleMode(specificMode)">Back</a>
               <a href="#" class="button-3 w-button">Generate</a>
             </div>
           </div>
-          <div class="div-block-34"></div>
+          <div class="div-block-34">specific</div>
         </div>
-        <div class="structered">
+        <div class="structered" id="structuredMode">
           <div class="div-block-28">
-            <h1 class="heading-10-copy">Specific Mode</h1>
+            <h1 class="heading-10-copy">Structured Mode</h1>
             <div class="div-block-29">
               <div class="div-block-33">
                 <h3 class="heading-10">Trick Count</h3>
@@ -135,21 +297,21 @@
               </div>
             </div>
             <div class="div-block-35">
-              <a href="#" class="button-4 w-button">Back</a>
+              <a href="#" class="button-4 w-button" ng-click="toggleMode(structuredMode)">Back</a>
               <a href="#" class="button-3 w-button">Generate</a>
             </div>
           </div>
-          <div class="div-block-34"></div>
+          <div class="div-block-34">structured</div>
         </div>
-        <div class="filter">
+        <div class="filter" id="filterMode">
           <div class="div-block-16">
             <h1 class="heading-7">Filter Tricks</h1>
             <div class="div-block-36">
-              <a href="#" class="button-5 w-button">Back</a>
+              <a href="#" class="button-5 w-button" ng-click="toggleMode(filterMode)">Back</a>
               <p class="paragraph-5">Filter any tricks you don&#x27;t want showing up in combos.</p>
             </div>
           </div>
-          <div class="div-block-37"></div>
+          <div class="div-block-37">filter</div>
         </div>
       </div>
     </div>
