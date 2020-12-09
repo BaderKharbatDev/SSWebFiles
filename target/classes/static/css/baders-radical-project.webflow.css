@@ -1,8 +1,9 @@
-@media (min-width: 480px) {
+@media (min-width: 480px) and (min-height: 400px) {
   .section-5 {
   	height: calc(100vh - 180px);
   }
 }
+
 
 .section {
   height: 200px;

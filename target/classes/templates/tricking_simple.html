@@ -56,8 +56,8 @@
 			$scope.loadList();
 			
 			$scope.generateCreative = function() {
-				var n = document.getElementById('numberTricks1').value;
-				var Obj = {n: n, tricks: $scope.trickList }
+				//var n = document.getElementById('numberTricks1').value;
+				var Obj = {n: $scope.creativeCount, tricks: $scope.trickList }
 				$http.post("/tricking/CreativeGeneration", Obj).then(function(response) {
 					$scope.errorMessage = "";
 					$scope.generatedList = response.data;

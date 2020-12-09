@@ -28,6 +28,21 @@
   <script th::inline="javascript">
   /*<![CDATA[*/
 		var app = angular.module("trickingApp", []);
+  
+		app.filter('orderObjectBy', function() {
+		  return function(items, field, reverse) {
+		    var filtered = [];
+		    angular.forEach(items, function(item) {
+		      filtered.push(item);
+		    });
+		    filtered.sort(function (a, b) {
+		      return (a[field] > b[field] ? 1 : -1);
+		    });
+		    if(reverse) filtered.reverse();
+		    return filtered;
+		  };
+		});
+		
 		app.controller("trickingCtrl", function($scope, $http) {
 			$scope.menuDiv = "trickingMenu";
 			$scope.creativeMode = "creativeMode";
@@ -45,7 +60,6 @@
 			}
 			
 			$scope.toggleMode = function(modeId) {
-				console.log("clicked");
 				toggleHideDiv($scope.menuDiv);
 				toggleHideDiv(modeId);
 			}
@@ -54,6 +68,32 @@
 			toggleHideDiv($scope.specificMode);
 			toggleHideDiv($scope.structuredMode);
 			toggleHideDiv($scope.filterMode);
+			
+			
+			//---
+			$scope.creativeCount = 3;
+			$scope.specificCount = 3;
+			$scope.structuredCount = 3;
+			
+			$scope.toggleCreativeCount = function(val) {
+				if( ($scope.creativeCount + val) >= 1 && ($scope.creativeCount + val) <= 20 ) {
+					$scope.creativeCount += val;
+				}
+			}
+			
+			$scope.toggleSpecificCount = function(val) {
+				if( ($scope.specificCount + val) >= 1 && ($scope.specificCount + val) <= 20 ) {
+					$scope.specificCount += val;
+				}
+			}
+			
+			$scope.toggleStructuredCount = function(val) {
+				if( ($scope.structuredCount + val) >= 1 && ($scope.structuredCount + val) <= 20 ) {
+					$scope.structuredCount += val;
+				}
+			}
+			
+			//--
 		
 			$scope.trickList = [];
 			$scope.category = [];
@@ -89,49 +129,50 @@
 			}
 			$scope.loadList();
 			
+			$scope.generatedCreativeList = [];
 			$scope.generateCreative = function() {
-				var n = document.getElementById('numberTricks1').value;
-				var Obj = {n: n, tricks: $scope.trickList }
+				var Obj = {n: $scope.creativeCount, tricks: $scope.trickList }
 				$http.post("/tricking/CreativeGeneration", Obj).then(function(response) {
 					$scope.errorMessage = "";
-					$scope.generatedList = response.data;
+					$scope.generatedCreativeList = response.data;
 					console.log("Creative Combo Generated")
 				}, function (rejection) {
-					$scope.errorMessage = rejection.data;
-					$scope.generatedList = [];
+					//$scope.errorMessage = rejection.data;
+					$scope.errorMessage = "Not Enough Moves Selected from the Filter Menu";
+					$scope.generatedCreativeList = [];
 				});
 			}
 			
+			$scope.generatedStructuredList = [];
 			$scope.generateStructured = function() {
-				var n = document.getElementById('numberTricks2').value;
 				var difficulty = document.getElementById('trickDifficulty').value;
-				var Obj = {n: n, tricks: $scope.trickList, difficulty: difficulty}
+				var Obj = {n: $scope.structuredCount, tricks: $scope.trickList, difficulty: difficulty}
 				$http.post("/tricking/StructuredGeneration", Obj).then(function(response) {
 					$scope.errorMessage = "";
-					$scope.generatedList = response.data;
+					$scope.generatedStructuredList = response.data;
 				}, function (rejection) {
-					$scope.generatedList = [];
+					$scope.generatedStructuredList = [];
 					$scope.errorMessage = rejection.data;
 				});
 			}
 			
+			$scope.generatedSpecificList = [];
 			$scope.generateSpecific = function() {
 				if($scope.specificTrick == null) {
 					$scope.errorMessage = "No Trick Selected";
 					return;
 				}
 				
-				var n = document.getElementById('numberTricks3').value;
 				var specific = $scope.specificTrick.name;
-				var pos = document.getElementById('specificPos').value;
+				var pos = document.getElementById('specificPositionValue').value;
 				
-				var Obj = {n: n, tricks: $scope.trickList, specific: specific, pos: pos}
+				var Obj = {n: $scope.specificCount, tricks: $scope.trickList, specific: specific, pos: pos}
 				$http.post("/tricking/SpecificGeneration", Obj).then(function(response) {
 					$scope.errorMessage = "";
-					$scope.generatedList = response.data;
+					$scope.generatedSpecificList = response.data;
 				}, function (rejection) {
-					$scope.generatedList = [];
-					$scope.errorMessage = rejection.data;
+					$scope.generatedSpecificList = [];
+					$scope.errorMessage = "Not Enough Moves Selected from the Filter Menu";;
 				});
 			}
 			
@@ -212,7 +253,6 @@
 	        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="trick.isActive"></input> {{trick.name}}
 	          </div>
 	        </div> 
-	        
         </div>
       </div>
       <div class="div-block-10">
@@ -251,52 +291,89 @@
         <div class="creative" id="creativeMode">
           <div class="div-block-28">
             <h1 class="heading-10">Creative Mode</h1>
-            <div class="div-block-33">
-              <h3 class="heading-10">Trick Count</h3>
-              <h1 class="heading-11">---------</h1>
-            </div>
+            <div class="div-block-33" style="margin-bottom: 20px;">
+              <h3 class="heading-10">Trick Count:  {{creativeCount}}</h3>
+           	  <div class="div-block-53" style="margin-left: 10px;">
+                   <div class="div-block-54" id="normalMinus" ng-click="toggleCreativeCount(-1)"><img src="images/icons8-minus-24.png" loading="lazy" alt="" class="image-11"></img></div>
+                   <div class="div-block-55" id="normalPlus" ng-click="toggleCreativeCount(1)"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
+               </div>  
+           	</div>
             <div class="div-block-35">
               <a href="#" class="button-4 w-button" ng-click="toggleMode(creativeMode)">Back</a>
-              <a href="#" class="button-3 w-button">Generate</a>
+              <a href="#" class="button-3 w-button" ng-click="generateCreative()">Generate</a>
             </div>
           </div>
-          <div class="div-block-34">creative</div>
+          
+          <div style="padding: 20px;">
+			{{errorMessage}}
+			<ol type="1">
+			<li ng-repeat="trick in generatedCreativeList" >
+			    {{trick.name}}
+			</li>
+			</ol>
+          </div>
+          
         </div>
         <div class="specific" id="specificMode">
           <div class="div-block-28">
             <h1 class="heading-10-copy">Specific Mode</h1>
             <div class="div-block-29">
-              <div class="div-block-33">
-                <h3 class="heading-10">Trick Count</h3>
-                <h1 class="heading-11">---------</h1>
-              </div>
+              <div class="div-block-33" style="margin-bottom: 5px;">
+	              <h3 class="heading-10">Trick Count:  {{specificCount}}</h3>
+	           	  <div class="div-block-53" style="margin-left: 10px; margin-right: 20px;">
+	                   <div class="div-block-54" id="normalMinus" ng-click="toggleSpecificCount(-1)"><img src="images/icons8-minus-24.png" loading="lazy" alt="" class="image-11"></img></div>
+	                   <div class="div-block-55" id="normalPlus" ng-click="toggleSpecificCount(1)"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
+	               </div>  
+           	</div>
               <div class="div-block-33">
                 <h3 class="heading-10">Specific Trick</h3>
-                <h1 class="heading-11">---------</h1>
+	            <select ng-model="specificTrick" style="margin-left: 10px; margin-right: 10px; padding: 3px;">
+				    <option ng-repeat="trick in trickList | orderObjectBy:'name'" ng-value="trick">{{trick.name}}</option>
+				</select>
               </div>
-              <div class="div-block-33">
+              <div class="div-block-33" style="margin-bottom: 3px;">
                 <h3 class="heading-10">Position</h3>
-                <h1 class="heading-11">---------</h1>
+                <select style="padding: 3px; margin-left: 10px; margin-right: 10px;" id="specificPositionValue" >
+				    <option value="1">Beginning</option>
+   				    <option value="2">Middle</option>
+   				    <option value="3">End</option>
+				</select>
               </div>
             </div>
             <div class="div-block-35">
               <a href="#" class="button-4 w-button" ng-click="toggleMode(specificMode)">Back</a>
-              <a href="#" class="button-3 w-button">Generate</a>
+              <a href="#" class="button-3 w-button" ng-click="generateSpecific()">Generate</a>
             </div>
           </div>
-          <div class="div-block-34">specific</div>
+          <div class="div-block-34" style="padding: 20px;">
+			<div style="padding: 20px;">
+				{{errorMessage}}
+				<ol type="1">
+				<li ng-repeat="trick in generatedSpecificList" >
+				    {{trick.name}}
+				</li>
+				</ol>
+          	</div>
+		  </div>
         </div>
         <div class="structered" id="structuredMode">
           <div class="div-block-28">
             <h1 class="heading-10-copy">Structured Mode</h1>
-            <div class="div-block-29">
+            <div class="div-block-29" style="margin-bottom: 10px;">
               <div class="div-block-33">
-                <h3 class="heading-10">Trick Count</h3>
-                <h1 class="heading-11">---------</h1>
+	              <h3 class="heading-10">Trick Count:  {{structuredCount}}</h3>
+	           	  <div class="div-block-53" style="margin-left: 10px;">
+	                   <div class="div-block-54" id="normalMinus" ng-click="toggleStructuredCount(-1)"><img src="images/icons8-minus-24.png" loading="lazy" alt="" class="image-11"></img></div>
+	                   <div class="div-block-55" id="normalPlus" ng-click="toggleStructuredCount(1)"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
+	               </div>  
               </div>
               <div class="div-block-33">
                 <h3 class="heading-10-copy-copy">Difficulty</h3>
-                <h1 class="heading-11">---------</h1>
+                <select style="padding: 3px; margin-left: 10px; margin-right: 10px;" id="specificPositionValue" >
+				    <option value="1">Easy</option>
+   				    <option value="2">In Between</option>
+   				    <option value="3">Hard</option>
+				</select>
               </div>
             </div>
             <div class="div-block-35">
@@ -304,7 +381,9 @@
               <a href="#" class="button-3 w-button">Generate</a>
             </div>
           </div>
-          <div class="div-block-34">structured</div>
+          <div class="div-block-34" style="padding: 20px;">
+			"Im Still Working on the Structured Mode Algorithm b/c I'm still not happy with it. So I've disabled it for now... -Bader"
+		  </div>
         </div>
         <div class="filter" id="filterMode">
           <div class="div-block-16">
@@ -314,7 +393,20 @@
               <p class="paragraph-5">Filter any tricks you don&#x27;t want showing up in combos.</p>
             </div>
           </div>
-          <div class="div-block-37">filter</div>
+          	<div class="div-block-37" style="padding: 20px;">
+          	
+	        	<div ng-repeat="cats in category">
+	        	  <div style="display:flex; margin-bottom: -5px; margin-top:10px;">
+	        	  	<p style="text-transform: capitalize; margin-right: 5px;">{{cats.name}}</p>
+		          	<input type="checkbox" ng-click="changeCat(cats)" ng-model="cats.isPressed"></input>
+	        	  </div>
+	        	  
+		          <div class="html-embed-5 w-embed" ng-repeat="trick in cats.tricks" style="margin-left:10px;">
+		        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="trick.isActive"></input> {{trick.name}}
+		          </div>
+		        </div> 
+
+			</div>
         </div>
       </div>
     </div>

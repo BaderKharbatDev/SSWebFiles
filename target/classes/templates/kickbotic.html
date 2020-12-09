@@ -88,8 +88,8 @@
 		$scope.normalCount = 3;
 		$scope.calloutCount = 3;
 		
-		
-		
+		//ensures normal mode is shown first
+		//document.getElementById('starterDiv').click();
 			
 		});
 	/*]]>*/
@@ -119,10 +119,10 @@
       <div class="div-block-49">
         <div data-duration-in="300" data-duration-out="100" class="w-tabs">
           <div class="tabs-menu w-tab-menu">
-            <a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link" ng-click="showResults()">
+            <a data-w-tab="Tab 1" class="tab-link-tab-1 w-inline-block w-tab-link w--current" ng-click="showResults()">
               <div class="text-block">Normal Mode</div>
             </a>
-            <a data-w-tab="Tab 2" class="tab-link-tab-2 w-inline-block w-tab-link w--current" ng-click="showResults()">
+            <a data-w-tab="Tab 2" class="tab-link-tab-2 w-inline-block w-tab-link" ng-click="showResults()">
               <div class="text-block-2">Call Out Mode</div>
             </a>
             <a data-w-tab="Tab 3" class="tab-link-tab-3 w-inline-block w-tab-link" ng-click="showFilter()">
@@ -130,7 +130,7 @@
             </a>
           </div>
           <div class="tabs-content w-tab-content">
-            <div data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane">
+            <div data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane w--tab-active">
               <div class="div-block-51">
                 <div class="div-block-52">
                   <div class="div-block-53">
@@ -143,7 +143,7 @@
                 <a href="#" class="button-8 w-button" id="normalButton">Generate</a>
               </div>
             </div>
-            <div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane w--tab-active">
+            <div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane">
               <div class="callout" id="calloutDiv">
                 <div class="div-block-50">
                   <h3 class="heading-19">Delay Between Combos</h3>
