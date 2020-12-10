@@ -83,13 +83,69 @@
 		var generateDisplay = "results"; 
 		
 		togglehide(timerDivId);
-		togglehide(filterDisplay);
+		$scope.showResults();
 		
 		$scope.normalCount = 3;
 		$scope.calloutCount = 3;
+		$scope.slider = 3;
+		var isTimerRunning = false;		
 		
-		//ensures normal mode is shown first
-		//document.getElementById('starterDiv').click();
+		$scope.speak = function() {
+			var str = "";
+			for(var i = 0; i < $scope.calloutCount; i++) {
+				str += "Jab, ";
+			}
+			
+			var msg = new SpeechSynthesisUtterance(str);
+			window.speechSynthesis.speak(msg);
+			delayNotRunning = false;
+			msg.onend = function(event) {
+			    startTimerHelper($scope.slider);
+			}
+		}
+		
+		//handles the delay between each callout
+		function startTimerHelper(timeleft) {
+		    var timer = setInterval(function(){
+		    	//checks if timer is no longer running
+		    	if(isTimerRunning == false) {
+		    		clearInterval(timer);
+		    		return;
+		    	}
+		    	
+				  if(timeleft <= 0){
+				    clearInterval(timer);
+					document.getElementById("timerText").innerHTML = "00:00";
+					if(isTimerRunning) {
+						$scope.speak();
+					}
+				  } else {
+			        var seconds = (timeleft < 10) ? '0' + timeleft.toString() : timeleft.toString();
+					document.getElementById("timerText").innerHTML = "00:" + seconds;
+				  }
+				  timeleft -= 1;
+				}, 1000);
+		}
+			
+		
+		$scope.startTimer = function() {
+			document.getElementById("timerText").innerHTML = "00:00";
+			togglehide(calloutDivId);
+			togglehide(timerDivId);
+			
+			//sets the var to true
+			isTimerRunning = true;
+			
+			//speaks
+			$scope.speak();
+		}
+		
+		$scope.stopTimer = function() {
+			isTimerRunning = false;
+			document.getElementById("timerText").innerHTML = "00:00";
+			togglehide(calloutDivId);
+			togglehide(timerDivId);
+		}
 			
 		});
 	/*]]>*/
@@ -160,11 +216,11 @@
                     <div class="div-block-55" id="calloutPlus" ng-click="incdecCallOut(1)"><img src="images/icons8-plus-24.png" loading="lazy" alt="" class="image-10"></img></div>
                   </div>
                 </div>
-                <a href="#" class="button-8 w-button" id="calloutButton">START</a>
+                <a href="#" class="button-8 w-button" id="calloutButton" ng-click="startTimer()">START</a>
               </div>
               <div class="timer" id="timerDiv">
-                <h1 class="heading-23" id="timerText">00:00</h1>
-                <a href="#" class="button-12 w-button" id="timerButton">STOP</a>
+                <h1 class="heading-23" id="timerText"></h1>
+                <a href="#" class="button-12 w-button" id="timerButton" ng-click="stopTimer()">STOP</a>
               </div>
             </div>
             <div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane">
