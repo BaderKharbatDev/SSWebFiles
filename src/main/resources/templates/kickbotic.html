@@ -146,6 +146,78 @@
 			togglehide(calloutDivId);
 			togglehide(timerDivId);
 		}
+		
+		$scope.strikeList = [];
+		$scope.category = [];
+		$scope.generatedList = [];
+		
+		$scope.loadList = function() {
+			$scope.error = "";
+			$http.get("/striking/OrderedStrikes").then(function(response) {
+				console.log(response.data)
+				$scope.strikeList = response.data;
+				
+				$http.get("/striking/Categories").then(function(response) {
+					var cats = response.data;
+					for(var i = 0; i < cats.length; i++) {
+						var obj = {};
+						obj.name = cats[i];
+						obj.strikes = [];
+						obj.isPressed = false;
+						for(var t = 0; t < $scope.strikeList.length; t++) {
+							if($scope.strikeList[t].type == obj.name) {
+								obj.strikes.push($scope.strikeList[t]);
+							} 
+						}
+						$scope.category.push(obj);
+					}
+				}, function (rejection) {
+					console.log("Couldn't retreive category data")
+				});
+				
+			}, function (rejection) {
+				console.log("Couldn't retreive data")
+			});					
+		}
+		$scope.loadList();
+		console.log($scope.category);
+		
+		//changes header cat checkbox
+		$scope.changeCat = function(cats) {
+			if(cats.isPressed) {
+				for(var i = 0; i < cats.strikes.length; i++) {
+					cats.strikes[i].isActive = true;
+				}
+			} else {
+				for(var i = 0; i < cats.strikes.length; i++) {
+					cats.strikes[i].isActive = false;
+				}
+			}
+		}
+		
+		//changes header cat checkbox on children change
+		$scope.checkCatCheckbox = function(cats) {
+			var allChecked = true;
+			var allEmpty = true;
+			for(var i = 0; i < cats.strikes.length; i++) {
+				if(!cats.strikes[i].isActive) {
+					allChecked = false;
+				}
+				if(cats.strikes[i].isActive) {
+					allEmpty = false;
+				}
+			}
+			
+			if(allChecked == true) {
+				cats.isPressed = true;
+			}
+			else if(allEmpty == true) {
+				cats.isPressed = false;
+			}
+			else {
+				cats.isPressed = false;
+			}
+		}
 			
 		});
 	/*]]>*/
@@ -230,8 +302,22 @@
             </div>
           </div>
         </div>
-        <div class="results" id="results">results</div>
-        <div class="filtermenu" id="filtermenu">filter</div>
+        <div class="results" id="results">
+        results
+        </div>
+        <div class="filtermenu" id="filtermenu" style="display: flex; flex-direction: column;">
+	        	<div ng-repeat="cats in category">
+	        	  <div style="display:flex; margin-bottom: -5px; margin-top:10px;">
+	        	  	<p style="text-transform: capitalize; margin-right: 5px;">{{cats.name}}</p>
+		          	<input type="checkbox" ng-click="changeCat(cats)" ng-model="cats.isPressed"></input>
+	        	  </div>
+	        	  
+		          <div class="html-embed-5 w-embed" ng-repeat="strike in cats.strikes" style="margin-left:10px;">
+		        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="strike.isActive"></input> {{strike.name}}
+		          </div>
+		        </div> 
+	        
+		</div>
       </div>
     </div>
   </div>

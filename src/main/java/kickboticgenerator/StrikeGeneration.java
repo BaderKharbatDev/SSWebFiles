@@ -57,7 +57,93 @@ public class StrikeGeneration {
 				//inits weight to 0
 				weight = new StrikeWeight(after);
 				
-				//algorithm
+				//algorithm calculated distance
+				if(prev.endDistance.equals(StrikeDistance.Close)) {
+					if(weight.strike.startDistance.equals(StrikeDistance.Close)) {
+						weight.inc(2);
+					} else if (weight.strike.startDistance.equals(StrikeDistance.Inbetween)) {
+						weight.inc(2);
+					}
+				} else if (prev.endDistance.equals(StrikeDistance.Inbetween)) {
+					if(weight.strike.startDistance.equals(StrikeDistance.Close)) {
+						weight.inc(1);
+					} else if (weight.strike.startDistance.equals(StrikeDistance.Inbetween)) {
+						weight.inc(1);
+					}
+				} else {
+					if(weight.strike.startDistance.equals(StrikeDistance.Far)) {
+						weight.inc(1);
+					} else if (weight.strike.startDistance.equals(StrikeDistance.Inbetween)) {
+						weight.inc(1);
+					}
+				}
+				
+				//algorithm calculates rotation
+				if(prev.rotation.equals(StrikeRotation.Clockwise)) {
+					if(weight.strike.rotation.equals(StrikeRotation.Counter_Clockwise)) {
+						weight.inc(1);
+					} else if (weight.strike.rotation.equals(StrikeRotation.Linear)) {
+						weight.inc(1);
+					}
+				} else if (prev.rotation.equals(StrikeRotation.Counter_Clockwise)) {
+					if(weight.strike.rotation.equals(StrikeRotation.Clockwise)) {
+						weight.inc(1);
+					} else if (weight.strike.rotation.equals(StrikeRotation.Linear)) {
+						weight.inc(1);
+					}
+				} else { //linear
+					if(weight.strike.rotation.equals(StrikeRotation.Clockwise)) {
+						weight.inc(1);
+					} else if (weight.strike.rotation.equals(StrikeRotation.Counter_Clockwise)) {
+						weight.inc(1);
+					}
+				}
+				
+				//algorithm for type
+				if(prev.type.equals(StrikeCategory.Punches)) {
+					if(weight.strike.type.equals(StrikeCategory.Kicks)) {
+						weight.inc(2);
+					} else if(weight.strike.type.equals(StrikeCategory.Punches)) {
+						weight.inc(2);
+					} else if(weight.strike.type.equals(StrikeCategory.Foot_Movement)) {
+						weight.inc(1);
+					} else if(weight.strike.type.equals(StrikeCategory.Head_Movement)) {
+						weight.inc(1);
+					}
+				} else if(prev.type.equals(StrikeCategory.Kicks)) {
+					if(weight.strike.type.equals(StrikeCategory.Kicks)) {
+						weight.inc(1);
+					} else if(weight.strike.type.equals(StrikeCategory.Punches)) {
+						weight.inc(2);
+					} else if(weight.strike.type.equals(StrikeCategory.Foot_Movement)) {
+						weight.inc(1);
+					} else if(weight.strike.type.equals(StrikeCategory.Head_Movement)) {
+						weight.inc(1);
+					}
+				} else if(prev.type.equals(StrikeCategory.Foot_Movement)) {
+					if(weight.strike.type.equals(StrikeCategory.Kicks)) {
+						weight.inc(2);
+					} else if(weight.strike.type.equals(StrikeCategory.Punches)) {
+						weight.inc(2);
+					} else if(weight.strike.type.equals(StrikeCategory.Foot_Movement)) {
+						weight.inc(1);
+					} else if(weight.strike.type.equals(StrikeCategory.Head_Movement)) {
+						weight.inc(1);
+					}
+				} else if(prev.type.equals(StrikeCategory.Head_Movement)) {
+					if(weight.strike.type.equals(StrikeCategory.Kicks)) {
+						weight.inc(2);
+					} else if(weight.strike.type.equals(StrikeCategory.Punches)) {
+						weight.inc(2);
+					} else if(weight.strike.type.equals(StrikeCategory.Foot_Movement)) {
+						weight.inc(1);
+					} else if(weight.strike.type.equals(StrikeCategory.Head_Movement)) {
+						weight.inc(1);
+					}
+				}
+				
+				//algorithm for difficulty
+				
 				
 				//adds to end
 				if(weight.weight < max_weight) {
