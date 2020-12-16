@@ -93,7 +93,7 @@
 		$scope.speak = function() {
 			var str = "";
 			for(var i = 0; i < $scope.calloutCount; i++) {
-				str += "Jab, ";
+				str += $scope.generatedList[i].name + ", ";
 			}
 			
 			var msg = new SpeechSynthesisUtterance(str);
@@ -117,7 +117,7 @@
 				    clearInterval(timer);
 					document.getElementById("timerText").innerHTML = "00:00";
 					if(isTimerRunning) {
-						$scope.speak();
+						$scope.timerGenerate();
 					}
 				  } else {
 			        var seconds = (timeleft < 10) ? '0' + timeleft.toString() : timeleft.toString();
@@ -125,6 +125,24 @@
 				  }
 				  timeleft -= 1;
 				}, 1000);
+		}
+		
+		$scope.timerGenerate = function() {
+			var n = $scope.calloutCount;
+			var Obj = {n: n, strikes: $scope.strikeList }
+			$http.post("/striking/NormalGeneration", Obj).then(function(response) {
+				$scope.errorMessage = "";
+				$scope.generatedList = response.data;
+				
+				$scope.speak();
+				
+			}, function (rejection) {
+				//$scope.errorMessage = rejection.data;
+				$scope.errorMessage = "Not Enough Moves Selected from the Filter Menu";
+				$scope.generatedList = [];
+				$scope.stopTimer();
+			});
+			
 		}
 			
 		
@@ -137,7 +155,7 @@
 			isTimerRunning = true;
 			
 			//speaks
-			$scope.speak();
+			$scope.timerGenerate();
 		}
 		
 		$scope.stopTimer = function() {
@@ -218,6 +236,18 @@
 				cats.isPressed = false;
 			}
 		}
+		
+		$scope.generate = function(n) {
+			var Obj = {n: n, strikes: $scope.strikeList }
+			$http.post("/striking/NormalGeneration", Obj).then(function(response) {
+				$scope.errorMessage = "";
+				$scope.generatedList = response.data;
+			}, function (rejection) {
+				//$scope.errorMessage = rejection.data;
+				$scope.errorMessage = "Not Enough Moves Selected from the Filter Menu";
+				$scope.generatedList = [];
+			});
+		}
 			
 		});
 	/*]]>*/
@@ -268,7 +298,7 @@
                   <h3 class="heading-17-copy">Number of Strikes</h3>
                   <h2 class="heading-18" id="normalCount">{{normalCount}}</h2>
                 </div>
-                <a href="#" class="button-8 w-button" id="normalButton">Generate</a>
+                <a href="#" class="button-8 w-button" id="normalButton" ng-click="generate(normalCount)">Generate</a>
               </div>
             </div>
             <div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane">
@@ -303,7 +333,14 @@
           </div>
         </div>
         <div class="results" id="results">
-        results
+        	<div style="padding: 20px;">
+				{{errorMessage}}
+				<ol type="1">
+				<li ng-repeat="strike in generatedList" >
+				    {{strike.name}}
+				</li>
+				</ol>
+          	</div>
         </div>
         <div class="filtermenu" id="filtermenu" style="display: flex; flex-direction: column;">
 	        	<div ng-repeat="cats in category">
@@ -315,8 +352,7 @@
 		          <div class="html-embed-5 w-embed" ng-repeat="strike in cats.strikes" style="margin-left:10px;">
 		        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="strike.isActive"></input> {{strike.name}}
 		          </div>
-		        </div> 
-	        
+		        </div>
 		</div>
       </div>
     </div>
