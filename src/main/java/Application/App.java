@@ -17,6 +17,7 @@ public class App {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.getProperties().put( "server.port", 80 );
 		SpringApplication.run(App.class, args);
 	}
 
