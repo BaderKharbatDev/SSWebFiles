@@ -235,20 +235,20 @@
       </div>
     </div>
   </div>
-  <div class="section-5" >
-    <div class="div-block-8" style="height: 100%;">
-      <div class="div-block-9" style="height: 100%;"> 
+  <div class="section-5">
+    <div class="div-block-8" style="height: auto;">
+      <div class="div-block-9" style="height: auto;"> 
         <div class="div-block-16">
           <h1 class="heading-7">Filter Tricks</h1>
         </div>
-        <div class="div-block-13" style="height: 100%; overflow-y: scroll;">
+        <div class="div-block-13" style="height: auto;">
         	<div ng-repeat="cats in category">
-        	  <div style="display:flex; margin-bottom: -5px; margin-top:10px;">
+        	  <div style="display:flex; margin-bottom: -5px; margin-top:10px; font-family: Montserrat, sans-serif; font-size: 15px; font-weight: 700;">
         	  	<p style="text-transform: capitalize; margin-right: 5px;">{{cats.name}}</p>
 	          	<input type="checkbox" ng-click="changeCat(cats)" ng-model="cats.isPressed"></input>
         	  </div>
         	  
-	          <div class="html-embed-5 w-embed" ng-repeat="trick in cats.tricks" style="margin-left:10px;">
+	          <div class="html-embed-5 w-embed" ng-repeat="trick in cats.tricks" style="margin-left:10px; font-family: Montserrat, sans-serif; font-size: 15px; font-weight: 400;" >
 	        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="trick.isActive"></input> {{trick.name}}
 	          </div>
 	        </div> 
@@ -262,25 +262,25 @@
           </div>
         </div>
         <div class="tricking-menu" id="trickingMenu">
-          <div class="div-block-19-copy" ng-click="toggleMode(filterMode)">
+          <div class="div-block-19-copy" ng-click="toggleMode(filterMode)" style="max-height: 150px;">
             <div class="div-block-22">
               <h3 class="heading-8-copy">Filter Tricks</h3>
               <p class="paragraph-copy">Filter out tricks that you may not want showing up when generating a tricking combination.</p>
             </div>
           </div>
-          <div class="div-block-19" ng-click="toggleMode(creativeMode)">
+          <div class="div-block-19" ng-click="toggleMode(creativeMode)" style="max-height: 150px;">
             <div class="div-block-22">
               <h3 class="heading-8">Creative Mode</h3>
               <p class="paragraph">Creates a tricking combo by matching tricks that have the same starting and ending stances.</p>
             </div>
           </div>
-          <div class="div-block-19" ng-click="toggleMode(specificMode)">
+          <div class="div-block-19" ng-click="toggleMode(specificMode)" style="max-height: 150px;">
             <div class="div-block-23">
               <h3 class="heading-8">Specific Mode</h3>
               <p class="paragraph-2">Builds a tricking combo around a specific trick. This trick can be placed at the beginning, middle, or end of the tricking combo.</p>
             </div>
           </div>
-          <div class="div-block-19" ng-click="toggleMode(structuredMode)">
+          <div class="div-block-19" ng-click="toggleMode(structuredMode)" style="max-height: 150px;">
             <div class="div-block-24">
               <h3 class="heading-8">Structured Mode</h3>
               <p class="paragraph-3">Builds a tricking combo that will always end with a finishing trick depending on the difficulty level chosen.</p>
@@ -303,7 +303,7 @@
             </div>
           </div>
           
-          <div style="padding: 20px;">
+          <div style="padding: 20px; font-family: Montserrat, sans-serif; font-size: 15px; font-weight: 400;">
 			{{errorMessage}}
 			<ol type="1">
 			<li ng-repeat="trick in generatedCreativeList" >
@@ -344,7 +344,7 @@
               <a href="#" class="button-3 w-button" ng-click="generateSpecific()">Generate</a>
             </div>
           </div>
-          <div class="div-block-34" style="padding: 20px;">
+          <div class="div-block-34" style="padding: 20px; font-family: Montserrat, sans-serif; font-size: 15px; font-weight: 400;">
 			<div style="padding: 20px;">
 				{{errorMessage}}
 				<ol type="1">
@@ -380,7 +380,7 @@
               <a href="#" class="button-3 w-button">Generate</a>
             </div>
           </div>
-          <div class="div-block-34" style="padding: 20px;">
+          <div class="div-block-34" style="padding: 20px; font-family: Montserrat, sans-serif; font-size: 15px; font-weight: 400;" >
 			"Im Still Working on the Structured Mode Algorithm b/c I'm still not happy with it. So I've disabled it for now... -Bader"
 		  </div>
         </div>
@@ -395,12 +395,12 @@
           	<div class="div-block-37" style="padding: 20px;">
           	
 	        	<div ng-repeat="cats in category">
-	        	  <div style="display:flex; margin-bottom: -5px; margin-top:10px;">
+	        	  <div style="display:flex; margin-bottom: -5px; margin-top:10px; font-family: Montserrat, sans-serif; font-size: 15px; font-weight: 700;" >
 	        	  	<p style="text-transform: capitalize; margin-right: 5px;">{{cats.name}}</p>
 		          	<input type="checkbox" ng-click="changeCat(cats)" ng-model="cats.isPressed"></input>
 	        	  </div>
 	        	  
-		          <div class="html-embed-5 w-embed" ng-repeat="trick in cats.tricks" style="margin-left:10px;">
+		          <div class="html-embed-5 w-embed" ng-repeat="trick in cats.tricks" style="margin-left:10px; font-family: Montserrat, sans-serif; font-size: 15px; font-weight: 400;">
 		        	<input type="checkbox" ng-change="checkCatCheckbox(cats)" ng-model="trick.isActive"></input> {{trick.name}}
 		          </div>
 		        </div> 
