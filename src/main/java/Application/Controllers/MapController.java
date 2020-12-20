@@ -29,9 +29,9 @@ public class MapController implements ErrorController{
         return PATH;
     }
 	
-    @GetMapping({"", "/", "/home", "/index"})
+    @GetMapping({"", "/", "/home"})
 	public String getMain() {
-		return "index";
+		return "home";
 	}
 	
     @GetMapping({"/tricking"})
