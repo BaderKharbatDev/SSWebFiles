@@ -136,7 +136,12 @@ public class Generation {
 					}
 				}
 				if(compatable) {
-					weight.inc(1);
+					weight.inc(2);
+				}
+				
+				//checks for repeating tricks
+				if(weight.trick.name.equals(prev.name)) {
+					weight.inc(-1);
 				}
 				
 				//computes swinging
@@ -192,6 +197,11 @@ public class Generation {
 				}
 				if(compatable) {
 					weight.inc(2);
+				}
+				
+				//checks for repeating tricks
+				if(weight.trick.name.equals(after.name)) {
+					weight.inc(-1);
 				}
 				
 				//computes swinging
@@ -262,6 +272,11 @@ public class Generation {
 				}
 				if(compatable) {
 					weight.inc(2);
+				}
+				
+				//checks for repeating tricks
+				if(weight.trick.name.equals(after.name)) {
+					weight.inc(-1);
 				}
 				
 				//computes swinging
